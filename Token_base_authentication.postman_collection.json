@@ -102,9 +102,11 @@
 					}
 				],
 				"url": {
-					"raw": "{{base_url}}/api/users?page=2",
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
 					"host": [
-						"{{base_url}}"
+						"reqres",
+						"in"
 					],
 					"path": [
 						"api",
