@@ -2,41 +2,37 @@
 
 name: postman
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-   run-postman:
+  run-postman:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Install Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-    - name: Install Newman
-      run: npm install -g newman
+      - name: Install Newman
+        run: npm install -g newman newman-reporter-htmlextra
 
-    - name: Run Postman Collection
-      run: |
-        newman run "Test_Environment.postman_environment.json" -r htmlextra --reporter-htmlextra-export report.html
+      - name: Run Postman Collection
+        run: |
+          newman run "Test_Environment.postman_environment.json" \
+            -r htmlextra \
+            --reporter-htmlextra-export report.html
 
-    - name:  Publish report
-      uses: actions/upload-artifact@v4
-      with:
-           name : Reports
-           path : SampleArifact
+      - name: Publish report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Reports
+          path: report.html
